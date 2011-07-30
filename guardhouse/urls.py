@@ -12,13 +12,11 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     url(r'^$', 'content.views.home', name="home"),
-
-    url(r'^login/', lambda x: x, name="login"),
-    url(r'^signup/', lambda x: x, name="signup"),
     url(r'^$', 'main.views.dashboard', name="dashboard"),
     url(r'^$', 'main.views.settings', name="settings"),
 
     url(r'^content/', include("content.urls")),
 
+    url(r'^accounts/', include('socialauth.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
