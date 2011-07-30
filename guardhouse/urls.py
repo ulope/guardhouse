@@ -15,6 +15,8 @@ urlpatterns = patterns('',
 
     url(r'^login/', lambda x: x, name="login"),
     url(r'^signup/', lambda x: x, name="signup"),
+    url(r'^$', 'main.views.dashboard', name="dashboard"),
+    url(r'^$', 'main.views.settings', name="settings"),
 
     url(r'^content/', include("content.urls")),
 
