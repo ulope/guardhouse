@@ -82,6 +82,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'main.middleware.HasAccountMiddleware',
 )
 
 ROOT_URLCONF = 'guardhouse.urls'
