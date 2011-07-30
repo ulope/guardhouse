@@ -93,8 +93,8 @@ TEMPLATE_DIRS = (
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'socialauth.auth_backends.OpenIdBackend',
-    'socialauth.auth_backends.TwitterBackend',
+    #'socialauth.auth_backends.OpenIdBackend',
+    #'socialauth.auth_backends.TwitterBackend',
 )
 
 INSTALLED_APPS = (
@@ -110,8 +110,8 @@ INSTALLED_APPS = (
     'south',
     'sentry',
     'sentry.client',
-    'openid_consumer',
-    'socialauth',
+    #'openid_consumer',
+    #'socialauth',
 
     'content',
     'main',
