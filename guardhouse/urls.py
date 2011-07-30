@@ -17,6 +17,8 @@ urlpatterns = patterns('',
 
     url(r'^content/', include("content.urls")),
 
-    url(r'^accounts/', include('socialauth.urls')),
+    url(r'^account/setup/$', 'main.views.account_setup', name="account_setup"),
+
+    url(r'^user/', include('socialauth.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
