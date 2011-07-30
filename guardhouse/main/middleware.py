@@ -12,6 +12,9 @@ class HasAccountMiddleware(object):
             if request.user.is_anonymous():
                 return
             else:
+                if request.user.is_staff:
+                    # Staff can do anything :)
+                    return
                 if Account.objects.filter(owner=request.user).exists():
                     # User already has an account set up
                     return
