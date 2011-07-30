@@ -101,8 +101,11 @@ INSTALLED_APPS = (
     'django_extensions',
     'compressor',
     'south',
+    'sentry',
+    'sentry.client',
 
     'content',
+    'main',
 )
 
 # A sample logging configuration. The only tangible logging
