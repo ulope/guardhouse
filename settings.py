@@ -83,7 +83,12 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 's#)uz#hu!u(g33@t!tk9hs_1-l_+@83f&54h^y%1-oqcpyo!y9'
+try:
+    with open(".sdecret", "r") as secret:
+        SECRET_KEY = secret.read()
+except IOError:
+    from django.core.exceptions import ImproperlyConfigured
+    raise ImproperlyConfigured("You need to place a secret key in a file called '.secret' in the project root.")
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
