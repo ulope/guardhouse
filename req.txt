@@ -4,5 +4,7 @@ django-extensions==0.6
 South==0.7.3
 django-indexer==0.3.0
 django-paging==0.2.4
+django-redis-cache==0.8.2
 django-sentry==1.8.6.2
 django-templatetag-sugar==0.1
+redis==2.4.9
