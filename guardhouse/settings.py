@@ -100,6 +100,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django_extensions',
     'compressor',
+    'south',
 
     'content',
 )
