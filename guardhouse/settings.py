@@ -30,6 +30,16 @@ CACHES = {
     },
 }
 
+# Celery
+BROKER_BACKEND = "redis"
+BROKER_HOST = "localhost"
+BROKER_PORT = 6379
+BROKER_VHOST = "0"
+CELERY_RESULT_BACKEND = "redis"
+REDIS_HOST = "localhost"
+REDIS_PORT = 6379
+
+
 TIME_ZONE = 'Europe/Berlin'
 
 LANGUAGE_CODE = 'en-us'
@@ -112,6 +122,7 @@ INSTALLED_APPS = (
     'sentry.client',
     #'openid_consumer',
     #'socialauth',
+    'djcelery',
 
     'content',
     'main',
@@ -169,3 +180,6 @@ try:
     from local_settings import *
 except ImportError:
     pass
+
+import djcelery
+djcelery.setup_loader()

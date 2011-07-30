@@ -21,3 +21,17 @@ CACHES = {
         },
     },
 }
+
+# Celery
+BROKER_BACKEND = "redis"
+BROKER_HOST = config['redis']['host']
+BROKER_PORT = config['redis']['port']
+BROKER_PASSWORD = config['redis']['password']
+CELERY_RESULT_BACKEND = "redis"
+REDIS_HOST = config['redis']['host']
+REDIS_PORT = config['redis']['port']
+REDIS_PASSWORD = config['redis']['password']
+
+COMPRESS_OFFLINE = True
+
+LOGGING['handlers']['console']['level'] = "INFO"
