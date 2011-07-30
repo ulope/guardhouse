@@ -44,14 +44,14 @@ MEDIA_ROOT = path.join(SITE_ROOT, "media")
 
 MEDIA_URL = '/media/'
 
-STATIC_ROOT = path.join(SITE_ROOT, "web")
+STATIC_ROOT = path.join(SITE_ROOT, "static")
 
 STATIC_URL = '/static/'
 
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 STATICFILES_DIRS = (
-    path.join(SITE_ROOT, "static"),
+    path.join(SITE_ROOT, "web"),
 )
 
 STATICFILES_FINDERS = (
@@ -62,7 +62,7 @@ STATICFILES_FINDERS = (
 
 try:
     # load secret key from file to keep it out of vcs
-    with open(".secret", "r") as secret:
+    with open(path.join(SITE_ROOT, ".secret"), "r") as secret:
         SECRET_KEY = secret.read()
 except IOError:
     from django.core.exceptions import ImproperlyConfigured

@@ -1,4 +1,4 @@
 .epio-app
 guardhouse/.secret
 guardhouse/compass/.sass-cache
-guardhouse/web
+guardhouse/static
