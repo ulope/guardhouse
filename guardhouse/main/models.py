@@ -38,8 +38,8 @@ class Account(BaseModel):
     for them.
     """
     name = models.CharField(_("Name"), max_length=300)
-    owner = models.ForeignKey(
-        "auth.User", verbose_name=_("Account Owner"), related_name="accounts"
+    owner = models.OneToOneField(
+        "auth.User", verbose_name=_("Account Owner"), related_name="account"
     )
     delegates = models.ManyToManyField(
         "auth.User", verbose_name=_("Authorized users"),
