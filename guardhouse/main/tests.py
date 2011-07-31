@@ -1,11 +1,27 @@
+from celery.exceptions import RetryTaskError
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.test import TransactionTestCase
+from django.test import TestCase, TransactionTestCase
 from django.utils.unittest import skipUnless
+from mock import patch
+from .tasks import verify_site
 from .models import Account, Site
 
 
-class MiddlewareTest(TransactionTestCase):
+class MockRequestsGet(object):
+    """Mock replacement for 'requests'"""
+    def __init__(self, key):
+        self.key = key
+
+    def __call__(self, *args, **kwargs):
+        class MockResult(object):
+            ok = True
+            headers = {'X-Guardhouse-Verify': self.key}
+            #noinspection PyMethodParameters
+            def read(me):
+                return self.key
+        return MockResult()
+
 class MainTest(TransactionTestCase):
     def setUp(self):
         self.user_wo_account = User.objects.create_user(
@@ -47,4 +63,18 @@ class MainTest(TransactionTestCase):
         self.client.login(username="test3", password="test")
         self.assertEquals(200, self.client.get("/").status_code)
         self.client.logout()
-        
+
+    def test_verify_site(self):
+        """
+        Test site ownership verification
+        """
+        self.assertRaises(RetryTaskError, verify_site, self.site2.pk)
+
+        with patch(
+            "main.tasks.requests.get",
+            MockRequestsGet(self.site2.get_verification_key())):
+            self.assertEquals(verify_site.delay(self.site2.pk).result, True)
+            # Reload from DB
+            self.site2 = Site.objects.get(pk=self.site2.pk)
+            self.assertEqual(self.site2.verified, True)
+            
