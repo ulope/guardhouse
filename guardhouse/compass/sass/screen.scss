@@ -33,12 +33,12 @@ body {
     // @include grid-background();
     padding: 0 15px;
     position: relative;
-    min-height: 450px;  
+    min-height: 550px;
 }
 
 aside.user_info {
     position: absolute;
-    top: 15px;
+    top: 0px;
     right: 15px;
 
     ul {
@@ -96,6 +96,10 @@ nav {
         display: block; 
         border-bottom: 1px solid #ddd;
         line-height: 35px;
+
+        a {
+            display: block;
+        }
 
         &.active a {
             text-decoration: underline;
