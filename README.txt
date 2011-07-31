@@ -9,9 +9,9 @@ Currently working functionality:
 * User creation / login (via django-social-auth)
 * Ceration of Sites (domains from which logs are accepted) incl. async 
   verification of domain ownership
+* Reception of sentry exception logs
 
 Missing functionality:
-* Reception of sentry exception logs
 * Displaying of exception logs
 
 
