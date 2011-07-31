@@ -1,6 +1,8 @@
+from django.utils.translation import ugettext as _
+from django.contrib import messages
 from django.core.exceptions import ImproperlyConfigured
 from django.shortcuts import redirect
-from .models import Account
+from .models import Account, Site
 
 class HasAccountMiddleware(object):
     """Force new users to set up account information"""
@@ -31,3 +33,29 @@ class HasAccountMiddleware(object):
                 "%s needs django's 'AuthenticationMiddleware' to be enabled."
             )
 
+
+class SiteVerificationCompletionMiddleware(object):
+    def process_request(self, request):
+        verify_runs = request.session.get('verify_runs', [])
+        keep_runs = []
+        for run in verify_runs:
+            site = Site.objects.get(pk=run.site_id)
+            if run.task.ready():
+                if run.task.failed():
+                    messages.add_message(
+                        request, messages.WARNING,
+                        _(u"Site verification for site '%s' failed. Click to "
+                           "retry.") % site.name,
+                        "retry_verify"
+                    )
+                    request.session.setdefault("retry_site_ids", []).append(site.pk)
+                else:
+                    messages.add_message(
+                        request, messages.INFO,
+                        _(u"Site verification for site '%s' succeeded."
+                         ) % site.name
+                    )
+            else:
+                # Run hasn't finised, keep it in the list
+                keep_runs.append(run)
+        request.session['verify_runs'] = keep_runs

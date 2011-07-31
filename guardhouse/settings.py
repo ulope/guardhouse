@@ -93,6 +93,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'main.middleware.HasAccountMiddleware',
+    'main.middleware.SiteVerificationCompletionMiddleware',
 )
 
 SESSION_ENGINE = "redis_sessions.backends.redis"
