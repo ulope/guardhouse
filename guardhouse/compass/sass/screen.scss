@@ -9,6 +9,7 @@
 
 @import "compass/css3/opacity";
 @import "compass/css3/transition";
+@import "compass/css3/inline-block";
 
 a {
     color: #e4832d;
@@ -184,6 +185,28 @@ span.source {
 
 p.important {
     font-weight: bold;
+}
+
+form {
+    label, input, textarea, radio {
+        margin-bottom: 5px;
+    }
+    label {
+        width: 250px;
+        @include inline-block;
+    }
+    input, textarea, radio {
+        @include inline-block;
+        vertical-align: top;
+    }
+    input[type=text], textarea {
+        width: 300px;
+    }
+    span.helptext {
+        display: block;
+        margin-left: 250px;
+        margin-bottom: 5px;
+    }
 }
 
 footer {
