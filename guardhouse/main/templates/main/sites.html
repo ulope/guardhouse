@@ -1,3 +1,8 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block nav_class_sites %}active{% endblock %}
+
+{% block body %}
+    <h1>{% trans "Sites" %}</h1>
+{% endblock %}
