@@ -35,6 +35,10 @@ urlpatterns = patterns('',
     url(r'^auth/register/$', 'django.contrib.auth.views.logout', name="logout"),
     url(r'^auth/', include('social_auth.urls')),
 
+    url(r'^receiver/$', 'sentry_wrap.views.store', name="receiver"),
+
+    url(r'^sentry/', include("sentry.web.urls")),
+
     url(r'^admin/', include(admin.site.urls)),
 )
 
