@@ -6,9 +6,8 @@ from .models import Account, Site
 
 
 class MiddlewareTest(TransactionTestCase):
+class MainTest(TransactionTestCase):
     def setUp(self):
-        site = Site.objects.create(name="Test site", domain="example.com",
-                                   verified=True)
         self.user_wo_account = User.objects.create_user(
             username="test1", password="test", email="a@b.com"
         )
@@ -21,7 +20,14 @@ class MiddlewareTest(TransactionTestCase):
         account = Account.objects.create(name="Test account",
                                          owner=self.user_w_account)
         account.delegates.add(self.user_w_access_perm)
-        account.sites.add(site)
+        self.site1 = Site.objects.create(
+            name="Verified site", domain="example.com", verified=True,
+            belongs_to=account
+        )
+        self.site2 = Site.objects.create(
+            name="Unverified site", domain="example.com", belongs_to=account
+        )
+
 
     @skipUnless("main.middleware.HasAccountMiddleware" in settings.MIDDLEWARE_CLASSES,
                 "'HasAccountMiddleware' isn't installed")
