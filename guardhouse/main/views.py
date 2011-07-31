@@ -1,7 +1,7 @@
 from django.utils.translation import ugettext as _
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.views.generic.simple import direct_to_template
 from .decorators import skip_has_account_middleware
 from .forms import AccountForm
@@ -42,5 +42,7 @@ def account_setup(request, force=False):
 
 class SiteListView(ListView):
     model = Site
-    context_object_name="sites"#
-    
+    context_object_name="sites"
+
+class SiteDetailView(DetailView):
+    model = Site
