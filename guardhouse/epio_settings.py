@@ -35,3 +35,6 @@ REDIS_PASSWORD = config['redis']['password']
 COMPRESS_OFFLINE = True
 
 LOGGING['handlers']['console']['level'] = "INFO"
+
+GOOGLE_ANALYTICS_DOMAIN = ".guardhouse.ep.io"
+GOOGLE_ANALYTICS_ID = "UA-4328176-5"
