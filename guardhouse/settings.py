@@ -136,6 +136,7 @@ INSTALLED_APPS = (
 
     'content',
     'main',
+    'sentry_wrap',
 )
 
 # A sample logging configuration. The only tangible logging
