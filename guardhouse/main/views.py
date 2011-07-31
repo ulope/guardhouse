@@ -1,7 +1,10 @@
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
+from django.views.generic.edit import DeleteView
 from django.views.generic.simple import direct_to_template
 from .decorators import skip_has_account_middleware
 from .forms import AccountForm
@@ -23,13 +26,15 @@ def account_setup(request, force=False):
         account = request.user.account
     except Account.DoesNotExist:
         pass
-    form = AccountForm(request.POST if request.method == "POST" else None, instance=account)
+    form = AccountForm(request.POST if request.method == "POST" else None,
+                       instance=account)
     if request.method == "POST":
         if form.is_valid():
             account = form.save(commit=False)
             account.owner = request.user
             account.save()
-            messages.add_message(request, messages.INFO, _("Your account has been updated!"))
+            messages.add_message(request, messages.INFO,
+                                 _("Your account has been updated!"))
             return redirect("account_setup")
     else:
         if force:
