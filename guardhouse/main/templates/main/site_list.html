@@ -33,6 +33,7 @@
                             {% if not site.verified and not site.verifying %}
                                 <a href="{% url "site_verify" pk=site.pk %}">{% trans "Verify" %}</a>
                             {% endif %}
+                            <a href="{% url "site_edit" pk=site.pk %}">{% trans "Edit" %}</a>
                             <a href="{% url "site_delete" pk=site.pk %}">{% trans "Delete" %}</a>
                         </td>
                     </tr>

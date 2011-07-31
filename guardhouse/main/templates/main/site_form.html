@@ -14,7 +14,7 @@
         {% csrf_token %}
         <ul>
             {{ form.as_ul }}
-            <li><input type="submit" value="{% trans "Create" %}" /></li>
+            <li><input type="submit" value="{% if site %}{% trans "Save" %}{% else %}{% trans "Create" %}{% endif %}" /></li>
         </ul>
     </form>
 
