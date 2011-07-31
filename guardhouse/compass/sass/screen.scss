@@ -1,2 +1,161 @@
+@import "compass";
 @import "compass/reset";
 
+@import "compass/layout";
+@import "compass/layout/grid-background";
+@import "compass/layout/stretching";
+
+@import "compass/css3/opacity";
+@import "compass/css3/transition";
+
+a {
+    color: #e4832d;
+    text-decoration: none;
+}
+
+html, body {
+    height: 100%;
+}
+body {
+    font-family: Helvetica, Arial;
+    font-size: 12pt;
+    line-height: 16pt;
+}
+
+#page {
+    width: 930px;
+    margin: 15px auto;
+    background: white;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-bottom: none;
+    
+    // @include grid-background();
+    padding: 0 15px;
+    position: relative;
+    min-height: 450px;  
+}
+
+aside.user_info {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+
+    ul {
+        @include horizontal-list;
+    }
+}
+
+header {
+    margin-bottom: 30px;
+}
+
+#messages {
+    width: 100%;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-left: none;
+    border-right: none;
+    line-height: 30px;
+    margin-bottom: 20px;
+    position: relative;
+
+    a.close {
+        position: absolute;
+        top: 0px;
+        right: 5px;
+        @include transparent;
+        @include single-transition("opacity", 0.5s);
+    }
+
+    &:hover a.close {
+        @include opaque;
+    }
+
+    .info {
+        color: #3ae42d;
+    }
+    .warning {
+        color: #352de4;
+    }
+    .error {
+        color: #e42d2d;
+    }
+}
+
+nav {
+    float: left;
+    width: 200px;
+    margin-right: 20px;
+
+    ul {
+        border-top: 1px solid #ddd;
+    }
+    li {
+        width: 100%;
+        display: block; 
+        border-bottom: 1px solid #ddd;
+        line-height: 35px;
+
+        &.active a {
+            text-decoration: underline;
+        }
+    }
+}
+
+section#body {
+    float: left;
+    width: 710px;
+
+    h1 {
+        font-size: 20pt;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        font-size: 16pt;
+        margin-bottom: 13px;
+    }
+
+    ul {
+        margin-bottom: 10px;
+    }
+
+    p {
+        margin-bottom: 10px;
+    }
+
+    .left, .right {
+        width: 345px;
+    }
+    .left {
+        float: left;
+    }
+    .right {
+        float: right;
+    }
+}
+
+ul.providers {
+    .google {
+            
+    }
+}
+
+footer {
+    position: absolute;
+    bottom: 15px;
+    @include stretch-x;
+
+    ul {
+        @include horizontal-list;
+         &:first-child {
+             margin-left: 15px;
+             float: left;
+         }
+         &:last-child {
+             float: right;
+             margin-right: 15px;
+         }
+    }
+}
