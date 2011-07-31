@@ -4,7 +4,7 @@ from .models import Account, Site
 class SiteForm(ModelForm):
     class Meta(object):
         model = Site
-        exclude = ('verified',)
+        exclude = ('belongs_to', 'verification_state',)
 
 class AccountForm(ModelForm):
     class Meta(object):
