@@ -17,6 +17,19 @@
         <script type="text/javascript" src="{{ STATIC_URL }}js/mootools-more-1.3.2.1.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/site.js"></script>
     {% endcompress %}
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-4328176-4']);
+      _gaq.push(['_setDomainName', '.guardhous.es']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+
     {% block extra_head %}
         
     {% endblock %}
