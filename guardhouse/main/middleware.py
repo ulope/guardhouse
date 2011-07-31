@@ -44,7 +44,7 @@ class SiteVerificationCompletionMiddleware(object):
             if run.task.ready():
                 if run.task.failed():
                     messages.add_message(
-                        request, messages.WARNING,
+                        request, messages.ERROR,
                         _(u"Site verification for site '%s' failed. Make sure "
                            "the configuration is correct and try again.") % site.name,
                         "retry_verify"
