@@ -4,14 +4,18 @@ from dns.resolver import Resolver, NXDOMAIN
 import requests
 
 url_templates = [
-    "http://%s/",
-    "https://%s/",
-    "http://www.%s/",
-    "https://www.%s/",
+    "http://%(domain)s/",
+    "https://%(domain)s/",
+    "http://www.%(domain)s/",
+    "https://www.%(domain)s/",
+    "http://%(domain)s/%(key)s",
+    "https://%(domain)s/%(key)s",
+    "http://www.%(domain)s/%(key)s",
+    "https://www.%(domain)s/%(key)s",
 ]
 
 @task(retries=4)
-def verify_site(site_id):
+def verify_site(site_id, retry_count=1):
     """Celery task to verify site ownership"""
 
     from .models import Site
@@ -20,10 +24,11 @@ def verify_site(site_id):
 
     valid = False
 
-    # Check header and content for the verification key in some common URL
-    # variations
-    for url in url_templates:
-        resp = requests.get(url % site.domain, timeout=3)
+    # Check header, content and files for the verification key in some common
+    # URL variations
+    for url_template in url_templates:
+        url = url_template % {'domain': site.domain, 'key': key}
+        resp = requests.get(url, timeout=3)
         if not resp.ok:
             continue
         valid = valid or key in resp.headers.get("X-Guardhouse-Verify", "")
@@ -49,10 +54,14 @@ def verify_site(site_id):
             # Domain doesn't exist - nothing we can do
             pass
             
+    from .models import VERIFY_STATE
     if valid:
-        from .models import VERIFY_STATE
         site.verification_state = VERIFY_STATE.VERIFIED
         site.save()
         return True
+    if retry_count >= 4:
+        # We already tried 3 times - time to give up
+        site.verification_state = VERIFY_STATE.FAILED
+        site.save()
     # Fall trough - retry
-    verify_site.retry(countdown=10)
+    verify_site.retry(countdown=10, args=(site_id, retry_count + 1))
