@@ -2,6 +2,8 @@ from django.conf import settings
 from django.conf.urls.defaults import patterns, include, url
 
 from django.contrib import admin
+from main.views import SiteListView
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -20,7 +22,7 @@ urlpatterns = patterns('',
     url(r'^account/setup/$', 'main.views.account_setup', name="account_setup"),
     url(r'^account/setup/(?P<force>[a-z]+)/$', 'main.views.account_setup', name="account_setup"),
 
-    url(r'^sites/$', 'main.views.sites', name="sites"),
+    url(r'^sites/$', SiteListView.as_view(), name="sites"),
 
 
     url(r'^content/', include("content.urls")),

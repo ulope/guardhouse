@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+
+{% block nav_class_sites %}active{% endblock %}
+
+{% block body %}
+    <h1>{% trans "Sites" %}</h1>
+    {% if not sites %}
+        <p>{% trans "You have no sites configured yet. You can add some below." %}</p>
+    {% else %}
+        <p>{% trans "This are the sites that are connected to your account." %}</p>
+        <table>
+            <thead>
+                <tr>
+                    <td>{% trans "Name" %}</td>
+                    <td>{% trans "Domain" %}</td>
+                    <td>{% trans "Verified?" %}</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for site in sites %}
+                    <tr>
+                        <td><a href="{% url "site_detail" pk=site.pk %}">{{ site.name }}</a></td>
+                        <td>{{ site.domain }}</td>
+                        <td>{{ site.get_verification_state_display }}</td>
+                        <td>
+                            <form action="{% url "sites" %}" method="post">
+                            {% if not site.verified %}
+                                <input type="submit" name="verify_{{ site.pk }}" value="{% trans "Verify" %}" >
+                            {% endif %}
+                            <input type="submit" name="delete_{{ site.pk }}" value="{% trans "Verify" %}" >
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}

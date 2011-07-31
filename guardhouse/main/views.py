@@ -1,10 +1,11 @@
 from django.utils.translation import ugettext as _
 from django.contrib import messages
 from django.shortcuts import render, redirect
+from django.views.generic import ListView
 from django.views.generic.simple import direct_to_template
 from .decorators import skip_has_account_middleware
 from .forms import AccountForm
-from .models import Account
+from .models import Account, Site
 
 
 def dashboard(request):
@@ -39,6 +40,7 @@ def account_setup(request, force=False):
     return render(request, 'main/account.html', {"form": form})
 
 
-def sites(request):
-    form = None
-    return render(request, 'main/sites.html', {"form": form})
+class SiteListView(ListView):
+    model = Site
+    context_object_name="sites"#
+    
