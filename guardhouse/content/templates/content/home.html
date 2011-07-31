@@ -1,4 +1,5 @@
 {% extends "content/base.html" %}
+{% load url from future %}
 
 {% block title %}
     Welcome to guardhouse
@@ -12,7 +13,7 @@
     </p>
     <p>
         Log in, configure Sites and then point their sentry.client's to
-        http://{{ site.domain }}/sentry/store to have them send their logs
+        http://{{ site.domain }}{% url "receiver" %} to have them send their logs
         here. (The log accepting part: NOT WORKING YET)
     </p>
     <p>
