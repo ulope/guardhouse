@@ -1,5 +1,8 @@
+import hmac
+from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext as _
+from .tasks import verify_site
 
 class BaseModel(models.Model):
     """Abstract base model"""
@@ -57,4 +60,9 @@ class Site(BaseModel):
             return self.name
         return _(u"%s [not verified]") % self.name
 
+    def get_verification_key(self):
+        """Returns a hexdigest of an hmac calculated from the domain name"""
+        return hmac.new(settings.SECRET_KEY, self.domain).hexdigest()
 
+    def verify(self):
+        return verify_site.delay(self.pk)
