@@ -7,7 +7,8 @@ from .models import Account, Site
 class HasAccountMiddleware(object):
     """Force new users to set up account information"""
     def process_view(self, request, view_func, view_args, view_kwargs):
-        if hasattr(view_func, "skip_has_account_middleware"):
+        if (hasattr(view_func, "skip_has_account_middleware") or
+            request.path.startswith("/auth")):
             # Skip middleware for allowed views
             return
         try:
