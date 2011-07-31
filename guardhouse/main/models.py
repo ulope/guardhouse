@@ -60,6 +60,11 @@ class Site(BaseModel):
         _("Allow wildcard subdomains"), default=False,
         help_text=_("Check this to also accept messages for all subdomains.")
     )
+    sentry_key = models.CharField(
+        _("Sentry client key"), max_length=50, db_index=True,
+        help_text=_("Enter the key of the Sentry client that runs on this site. "
+                    "It will be used to authenticate against the guardhouse Server")
+    )
     belongs_to = models.ForeignKey(Account, verbose_name=_("Account"),
                                    related_name="sites")
     verification_state = models.CharField(
