@@ -27,7 +27,7 @@ def verify_site(site_id):
         if not resp.ok:
             continue
         valid = valid or key in resp.headers.get("X-Guardhouse-Verify", "")
-        valid = valid or key in resp.read()
+        valid = valid or key in resp.content
         if valid:
             break
 

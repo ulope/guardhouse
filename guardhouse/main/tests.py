@@ -17,9 +17,7 @@ class MockRequestsGet(object):
         class MockResult(object):
             ok = True
             headers = {'X-Guardhouse-Verify': self.key}
-            #noinspection PyMethodParameters
-            def read(me):
-                return self.key
+            content = self.key
         return MockResult()
 
 class MainTest(TransactionTestCase):
