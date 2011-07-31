@@ -4,5 +4,11 @@
 
 {% block body %}
     <h1>Site {{ site.name }}</h1>
+    <ul>
+        <li>Name: {{ site.name }}</li>
+        <li>Domain: {{ site.domain }}</li>
+        <li>Sentry Key: {{ site.sentry_key }}</li>
+        <li>Status: {{ site.get_verification_state_display }}</li>
+    </ul>
 
 {% endblock %}
