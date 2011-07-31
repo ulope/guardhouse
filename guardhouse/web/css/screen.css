@@ -91,13 +91,13 @@ body {
   border-bottom: none;
   padding: 0 15px;
   position: relative;
-  min-height: 450px;
+  min-height: 550px;
 }
 
 /* line 39, ../../compass/sass/screen.scss */
 aside.user_info {
   position: absolute;
-  top: 15px;
+  top: 0px;
   right: 15px;
 }
 /* line 44, ../../compass/sass/screen.scss */
@@ -200,47 +200,51 @@ nav li {
   line-height: 35px;
 }
 /* line 100, ../../compass/sass/screen.scss */
+nav li a {
+  display: block;
+}
+/* line 104, ../../compass/sass/screen.scss */
 nav li.active a {
   text-decoration: underline;
 }
 
-/* line 106, ../../compass/sass/screen.scss */
+/* line 110, ../../compass/sass/screen.scss */
 section#body {
   float: left;
   width: 710px;
 }
-/* line 110, ../../compass/sass/screen.scss */
+/* line 114, ../../compass/sass/screen.scss */
 section#body h1 {
   font-size: 20pt;
   margin-bottom: 20px;
 }
-/* line 115, ../../compass/sass/screen.scss */
+/* line 119, ../../compass/sass/screen.scss */
 section#body h2 {
   font-size: 16pt;
   margin-bottom: 13px;
 }
-/* line 120, ../../compass/sass/screen.scss */
+/* line 124, ../../compass/sass/screen.scss */
 section#body ul {
   margin-bottom: 10px;
 }
-/* line 124, ../../compass/sass/screen.scss */
+/* line 128, ../../compass/sass/screen.scss */
 section#body p {
   margin-bottom: 10px;
 }
-/* line 128, ../../compass/sass/screen.scss */
+/* line 132, ../../compass/sass/screen.scss */
 section#body .left, section#body .right {
   width: 345px;
 }
-/* line 131, ../../compass/sass/screen.scss */
+/* line 135, ../../compass/sass/screen.scss */
 section#body .left {
   float: left;
 }
-/* line 134, ../../compass/sass/screen.scss */
+/* line 138, ../../compass/sass/screen.scss */
 section#body .right {
   float: right;
 }
 
-/* line 145, ../../compass/sass/screen.scss */
+/* line 149, ../../compass/sass/screen.scss */
 footer {
   position: absolute;
   bottom: 15px;
@@ -248,7 +252,7 @@ footer {
   left: 0;
   right: 0;
 }
-/* line 150, ../../compass/sass/screen.scss */
+/* line 154, ../../compass/sass/screen.scss */
 footer ul {
   margin: 0;
   padding: 0;
@@ -279,12 +283,12 @@ footer ul li:last-child {
 footer ul li.last {
   padding-right: 0;
 }
-/* line 152, ../../compass/sass/screen.scss */
+/* line 156, ../../compass/sass/screen.scss */
 footer ul:first-child {
   margin-left: 15px;
   float: left;
 }
-/* line 156, ../../compass/sass/screen.scss */
+/* line 160, ../../compass/sass/screen.scss */
 footer ul:last-child {
   float: right;
   margin-right: 15px;
