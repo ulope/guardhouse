@@ -1,3 +1,21 @@
 {% extends "base.html" %}
 
 {% block nav_class_dashboard %}active{% endblock %}
+
+{% block body %}
+    <h1>Dashboard</h1>
+    <p>The following of your sites have unresolved messages:</p>
+    <table>
+        <thead>
+            <tr><td>Site</td><td>Message count</td></tr>
+        </thead>
+        <tbody>
+            {% for site in sites %}
+                <tr>
+                    <td>{{ site.name }}</td>
+                    <td>{{ site.sentry_messages.count }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

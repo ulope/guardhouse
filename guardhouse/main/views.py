@@ -15,7 +15,11 @@ from .models import Account, Site
 
 @login_required
 def dashboard(request):
-    return direct_to_template(request, 'main/dashboard.html')
+    """
+    Return all Sites that have unresolved messages associated.
+    """
+    sites = request.user.account.sites.filter(sentry_messages__message__group__status=0)
+    return render(request, 'main/dashboard.html', {"sites": sites})
 
 
 @login_required
