@@ -45,7 +45,7 @@ def verify_site(site_id, retry_count=1):
                 for answer in result.response.answer:
                     for item in answer.items:
                         if (isinstance(item, rdtypes.ANY.CNAME.CNAME) and
-                            item.target.to_text() == "verify.guardhous.es"):
+                            "verify.guardhous.es" in item.target.to_text()):
                             valid = True
                             raise StopIteration()
             except StopIteration:
