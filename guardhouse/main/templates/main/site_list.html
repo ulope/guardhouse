@@ -21,7 +21,7 @@
                 <tr>
                     <td>{% trans "Name" %}</td>
                     <td>{% trans "Domain" %}</td>
-                    <td>{% trans "Verified?" %}</td>
+                    <td>{% trans "Status" %}</td>
                     <td></td>
                 </tr>
             </thead>
@@ -42,4 +42,6 @@
             </tbody>
         </table>
     {% endif %}
+    <br/>
+    <a href="{% url "site_create" %}">Add new Site</a>
 {% endblock %}

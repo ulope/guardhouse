@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block nav_class_sites %}active{% endblock %}
+
+{% block body %}
+    {% if site %}
+        <h1>{% blocktrans with site.name as site_name %}Edit site '{{ site_name }}'{% endblocktrans %}</h1>
+    {% else %}
+        <h1>{% trans "Add new site" %}</h1>
+    {% endif %}
+
+    <form action="." method="post">
+        {% csrf_token %}
+        <ul>
+            {{ form.as_ul }}
+            <li><input type="submit" value="{% trans "Create" %}" /></li>
+        </ul>
+    </form>
+
+{% endblock %}

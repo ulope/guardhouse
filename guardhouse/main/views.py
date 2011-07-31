@@ -4,10 +4,10 @@ from django.utils.translation import ugettext as _
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import DeleteView
+from django.views.generic.edit import DeleteView, CreateView
 from django.views.generic.simple import direct_to_template
 from .decorators import skip_has_account_middleware
-from .forms import AccountForm
+from .forms import AccountForm, SiteForm
 from .models import Account, Site
 
 
@@ -56,8 +56,8 @@ class SiteDeleteView(DeleteView):
     model = Site
 
     def delete(self, request, *args, **kwargs):
+        messages.add_message(request, messages.INFO, _("Site has been deleted."))
         response = super(SiteDeleteView, self).delete(request, *args, **kwargs)
-        messages.add_message(request, messages.INFO, _("Site %s has been deleted."))
         return response
 
     def get_success_url(self):
@@ -87,3 +87,22 @@ class SiteVerifyView(DeleteView):
 
     def get_success_url(self):
         return reverse("sites")
+
+class SiteCreateView(CreateView):
+    model = Site
+    form_class = SiteForm
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.belongs_to = self.request.user.account
+        self.object.save()
+        messages.add_message(
+            self.request, messages.INFO,
+            _("Site '%s' has been created") % self.object.name
+        )
+        return super(SiteCreateView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse("sites")
+
+
