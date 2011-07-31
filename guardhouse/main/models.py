@@ -35,6 +35,17 @@ class Account(BaseModel):
     def __unicode__(self):
         return self.name
 
+class VERIFY_STATE(object):
+    NEW = "new"
+    FAILED = "failed"
+    VERIFIED = "verified"
+
+VERIFICATION_STATE_CHOICES = (
+    (VERIFY_STATE.NEW, _("New")),
+    (VERIFY_STATE.FAILED, _("Failed")),
+    (VERIFY_STATE.VERIFIED, _("Verified")),
+)
+
 class Site(BaseModel):
     """
     A site for which messages are accepted. Has to be verified before it can be
@@ -48,7 +59,10 @@ class Site(BaseModel):
     )
     belongs_to = models.ForeignKey(Account, verbose_name=_("Account"),
                                    related_name="sites")
-    verified = models.BooleanField(_("Verified"), default=False)
+    verification_state = models.CharField(
+        _("Verified"), default=VERIFY_STATE.NEW,
+        choices=VERIFICATION_STATE_CHOICES, max_length=10
+    )
 
     class Meta(object):
         verbose_name = _("Site")
@@ -63,6 +77,10 @@ class Site(BaseModel):
     def get_verification_key(self):
         """Returns a hexdigest of an hmac calculated from the domain name"""
         return hmac.new(settings.SECRET_KEY, self.domain).hexdigest()
+
+    @property
+    def verified(self):
+        return self.verification_state == VERIFY_STATE.VERIFIED
 
     def verify(self):
         return verify_site.delay(self.pk)

@@ -50,7 +50,8 @@ def verify_site(site_id):
             pass
             
     if valid:
-        site.verified = True
+        from .models import VERIFY_STATE
+        site.verification_state = VERIFY_STATE.VERIFIED
         site.save()
         return True
     # Fall trough - retry
