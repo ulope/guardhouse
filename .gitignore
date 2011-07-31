@@ -2,3 +2,4 @@
 guardhouse/.secret
 guardhouse/compass/.sass-cache
 guardhouse/static
+local_settings.py
