@@ -1,4 +1,4 @@
-{% load compress %}
+{% load compress i18n %}
 {% load url from future %}
 <!doctype html>
 <html>
@@ -25,15 +25,18 @@
             <h1>guardhouse</h1>
             <p>All your errors are belong to us</p>
             <aside class="user_info">
-                <ul>
-                    {% if user.is_anonymous %}
-                        <li><a href="{% url "socialauth_login_page" %}">Login</a></li>
-{#                        <li><a href="{% url "signup" %}">Sign Up</a></li>#}
-                    {% else %}
-                        <li>Logged in as {{ user.get_full_name }} ({{ user.username }})</li>
-                        <li><a href="{% url "socialauth_social_logout" %}">Logout</a></li>
-                    {% endif %}
-                </ul>
+                {% block user_info %}
+                    <ul>
+                        {% if user.is_anonymous %}
+                            <li><a href="{% url "login" %}">Login</a></li>
+                        {% else %}
+                            <li>{% blocktrans with user.get_full_name as full_name and user.username as username %}
+                                Logged in as {{ full_name }} ({{ username }})
+                            {% endblocktrans %}</li>
+                            <li><a href="{% url "logout" %}">{% trans "Logout" %}</a></li>
+                        {% endif %}
+                    </ul>
+                {% endblock %}
             </aside>
         </header>
         {% if messages %}
@@ -49,8 +52,6 @@
             <ul>
                 {% if user.is_anonymous %}
                     <li class="{% block nav_class_about %}{% endblock %}"><a href="{% url "home" %}">About</a></li>
-                    <li class="{% block nav_class_login %}{% endblock %}"><a href="{% url "socialauth_login_page" %}">Login</a></li>
-{#                    <li class="{% block nav_class_signup %}{% endblock %}"><a href="{% url "signup" %}">Sign Up</a></li>#}
                 {% else %}
                     <li class="{% block nav_class_dashboard %}{% endblock %}"><a href="{% url "dashboard" %}">Dashboard</a></li>
                     <li class="{% block nav_class_settings %}{% endblock %}"><a href="{% url "settings" %}">Settings</a></li>

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+
+{% block user_info %}
+{% endblock %}
+
+{% block body %}
+    <h1>Login</h1>
+    <p>{% blocktrans %}You can either log in via username and password, or use one of the alternate login providers:{% endblocktrans %}</p>
+    <section class="left">
+        <form action="." method="post">
+            {% csrf_token %}
+            <ul>
+                {{ form.as_ul }}
+                <li><input type="submit" value="{% trans "Login" %}" /></li>
+            </ul>
+        </form>
+    </section>
+    <section class="right">
+        <h2>Login with:</h2>
+        <a href="{% url "socialauth_begin" backend="google" %}">Google</a>
+        <a href="{% url "socialauth_begin" "twitter" %}">Twitter</a>
+        <form action="{% url "socialauth_begin" "openid" %}" method="post">
+            {% csrf_token %}
+            <ul>
+                <li>
+                    <label for="openid_identifier">Other provider</label>
+                    <input id="openid_identifier" type="text" value="" name="openid_identifier" />
+                </li>
+                <li><input type="submit" value="{% trans "Login" %}" /></li>
+            </ul>
+        </form>
+    </section>
+{% endblock %}

@@ -12,13 +12,16 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     url(r'^$', 'content.views.home', name="home"),
-    url(r'^$', 'main.views.dashboard', name="dashboard"),
-    url(r'^$', 'main.views.settings', name="settings"),
+    url(r'^dashboard/$', 'main.views.dashboard', name="dashboard"),
+
+    url(r'^account/settings/$', 'main.views.settings', name="settings"),
+    url(r'^account/setup/$', 'main.views.account_setup', name="account_setup"),
 
     url(r'^content/', include("content.urls")),
 
-    url(r'^account/setup/$', 'main.views.account_setup', name="account_setup"),
+    url(r'^auth/login/$', 'django.contrib.auth.views.login', name="login"),
+    url(r'^auth/logout/$', 'django.contrib.auth.views.logout', name="logout"),
+    url(r'^auth/', include('social_auth.urls')),
 
-    url(r'^user/', include('socialauth.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
