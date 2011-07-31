@@ -2,6 +2,7 @@ import hmac
 from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext as _
+from main.util import VerifyRun
 from .tasks import verify_site
 
 class BaseModel(models.Model):
@@ -84,5 +85,19 @@ class Site(BaseModel):
     def verified(self):
         return self.verification_state == VERIFY_STATE.VERIFIED
 
-    def verify(self):
-        return verify_site.delay(self.pk)
+    @property
+    def verifying(self):
+        return self.verification_state == VERIFY_STATE.VERIFYING
+
+    def verify(self, request=False):
+        """
+        Dispatch verification job to celery and (if request is given) add
+        a VerifyRun object to the session.
+        """
+        self.verification_state = VERIFY_STATE.VERIFYING
+        self.save()
+        task = verify_site.delay(self.pk)
+        request.session.setdefault('verify_runs', []).append(
+            VerifyRun(task, self.pk)
+        )
+        return task
