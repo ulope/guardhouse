@@ -95,6 +95,8 @@ MIDDLEWARE_CLASSES = (
     'main.middleware.HasAccountMiddleware',
 )
 
+SESSION_ENGINE = "redis_sessions.backends.redis"
+
 ROOT_URLCONF = 'guardhouse.urls'
 
 TEMPLATE_DIRS = (
