@@ -28,7 +28,7 @@ def verify_site(site_id, retry_count=1):
     # URL variations
     for url_template in url_templates:
         url = url_template % {'domain': site.domain, 'key': key}
-        resp = requests.get(url, timeout=3)
+        resp = requests.get(url, timeout=10)
         if not resp.ok:
             continue
         valid = valid or key in resp.headers.get("X-Guardhouse-Verify", "")
@@ -64,4 +64,4 @@ def verify_site(site_id, retry_count=1):
         site.verification_state = VERIFY_STATE.FAILED
         site.save()
     # Fall trough - retry
-    verify_site.retry(countdown=10, args=(site_id, retry_count + 1))
+    verify_site.retry(countdown=30, args=(site_id, retry_count + 1))
