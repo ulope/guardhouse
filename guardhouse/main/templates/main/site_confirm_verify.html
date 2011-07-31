@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+
+{% block nav_class_sites %}active{% endblock %}
+
+{% block body %}
+    <h1>Verify site {{ site.name }}</h1>
+    {% if site.verified %}
+        <p>This site has already been verified.</p>
+    {% else %}
+        <p>{% blocktrans %}
+            Before a site can be used with guardhouse you have to prove that you
+            have admistrative control over that domain.
+        {% endblocktrans %}</p>
+        <p>{% blocktrans with site.name as site_name and site.domain as site_domain %}
+            The site '{{ site_name }}' ({{ site_domain }}) has not yet been verified.
+        {% endblocktrans %}</p>
+        <p class="important">{% blocktrans with site.get_verification_key as verification_key %}
+            The verfication key for this site is: <span>{{ verification_key }}</span>
+        {% endblocktrans %}</p>
+        <p>{% trans "Sites can be verified with the folowing methods:" %}</p>
+        {% blocktrans with site.get_verification_key as verification_key %}
+            <ul class="list">
+            <li>
+                Add a file called '{{ verification_key }}' that contains
+                '{{ verification_key }}' to the root of your site.
+            </li>
+            <li>
+                Add a meta tag named 'guardhouse_verify' containing
+                '{{ verification_key }}' to the index page of your site.
+                <a class="showlink" href="#">Show example</a>
+                <span class="source hidden">
+                    &lt;meta name="guardhouse_verify" content="{{ verification_key }}"&gt;
+                </span>
+            </li>
+            <li>
+                Add an HTTP-Header named 'X-Guardhouse-Verify' containing
+                '{{ verification_key }}' to the index page of your site.
+                <a class="showlink" href="#">Show example</a>
+                <span class="source hidden">
+                    X-Guardhouse-Verify:  {{ verification_key }}
+                </span>
+            </li>
+            <li>Add a DNS CNAME record called '{{ verification_key }}' that
+                points to 'verify.guardhous.es' to your domain's DNS server
+                configuration.
+                <a class="showlink" href="#">Show example</a>
+                <span class="source hidden">
+                    {{ verification_key }}&nbsp;&nbsp;&nbsp;IN CNAME verify.guardhous.es
+                </span>
+            </li>
+        </ul> 
+        {% endblocktrans %}
+        <p>{% blocktrans %}
+            You only need to configure <b>one</b> of the methods listed above!
+            After you have done so click the button below to start the verification
+        {% endblocktrans %}</p>
+        <form action="." method="post">
+            {% csrf_token %}
+            <input type="submit" value="{% trans "Start verification" %}" />
+        </form>
+    {% endif %}
+    <br/>
+    <a href="{% url "sites" %}">Return to the list of Sites</a>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+
+{% block nav_class_sites %}active{% endblock %}
+
+{% block body %}
+    <h1>Delete site {{ site.name }}</h1>
+    <p>{% blocktrans with site.name as site_name and site.domain as site_domain %}
+        Are you sure you want to delete the site '{{ site_name }}' ({{ site_domain }})?
+    {% endblocktrans %}</p>
+    <form action="." method="post">
+        <a href="{% url "sites" %}">{% trans "Don't delete" %}</a>
+        <input type="submit" value="{% trans "Delete" %}" />
+    </form>
+{% endblock %}
