@@ -45,8 +45,8 @@ class SiteVerificationCompletionMiddleware(object):
                 if run.task.failed():
                     messages.add_message(
                         request, messages.WARNING,
-                        _(u"Site verification for site '%s' failed. Click to "
-                           "retry.") % site.name,
+                        _(u"Site verification for site '%s' failed. Make sure "
+                           "the configuration is correct and try again.") % site.name,
                         "retry_verify"
                     )
                     request.session.setdefault("retry_site_ids", []).append(site.pk)
