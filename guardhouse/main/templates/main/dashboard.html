@@ -3,11 +3,11 @@
 {% block nav_class_dashboard %}active{% endblock %}
 
 {% block body %}
-    <h1>Dashboard</h1>
-    <p>The following of your sites have unresolved messages:</p>
+    <h1>{% trans "Dashboard" %}</h1>
+    <p>{% trans "The following of your sites have unresolved messages:" %}</p>
     <table>
         <thead>
-            <tr><td>Site</td><td>Message count</td></tr>
+            <tr><td>{% trans "Site" %}</td><td>{% trans "Message count" %}</td></tr>
         </thead>
         <tbody>
             {% for site in sites %}
