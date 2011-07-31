@@ -7,4 +7,16 @@ window.addEvent("domready", function() {
             messages.dissolve();
         });
     }
+
+    $$('.showlink').each(function(link){
+        var content = link.getNext(".hidden");
+        if (content) {
+            content.hide();
+            link.addEvent("click", function(evt) {
+                evt.stop();
+                content.reveal();
+                link.hide();
+            });
+        }
+    });
 });
