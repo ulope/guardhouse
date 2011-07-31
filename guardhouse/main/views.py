@@ -46,3 +46,39 @@ class SiteListView(ListView):
 
 class SiteDetailView(DetailView):
     model = Site
+
+class SiteDeleteView(DeleteView):
+    model = Site
+
+    def delete(self, request, *args, **kwargs):
+        response = super(SiteDeleteView, self).delete(request, *args, **kwargs)
+        messages.add_message(request, messages.INFO, _("Site %s has been deleted."))
+        return response
+
+    def get_success_url(self):
+        return reverse("sites")
+
+class SiteVerifyView(DeleteView):
+    """
+    View to kick off site verification.
+    (Hm a lot of code - not sure that CBV's are really an advantage)
+    """
+    model = Site
+    template_name_suffix = '_confirm_verify'
+
+    def post(self, *args, **kwargs):
+        return self.verify(*args, **kwargs)
+
+    def verify(self, request, **kwargs):
+        self.object = self.get_object()
+
+        self.object.verify(request)
+        messages.add_message(
+            request, messages.INFO,
+            _("Verification started. You will be notified of the result shortly.")
+        )
+
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        return reverse("sites")

@@ -4,6 +4,12 @@
 
 {% block nav_class_sites %}active{% endblock %}
 
+{% block extra_head %}
+    <script type="text/javascript">
+        location.reload.periodical(10000);
+    </script>
+{% endblock %}
+
 {% block body %}
     <h1>{% trans "Sites" %}</h1>
     {% if not sites %}
@@ -26,11 +32,10 @@
                         <td>{{ site.domain }}</td>
                         <td>{{ site.get_verification_state_display }}</td>
                         <td>
-                            <form action="{% url "sites" %}" method="post">
-                            {% if not site.verified %}
-                                <input type="submit" name="verify_{{ site.pk }}" value="{% trans "Verify" %}" >
+                            {% if not site.verified and not site.verifying %}
+                                <a href="{% url "site_verify" pk=site.pk %}">{% trans "Verify" %}</a>
                             {% endif %}
-                            <input type="submit" name="delete_{{ site.pk }}" value="{% trans "Verify" %}" >
+                            <a href="{% url "site_delete" pk=site.pk %}">{% trans "Delete" %}</a>
                         </td>
                     </tr>
                 {% endfor %}

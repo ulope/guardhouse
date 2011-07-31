@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.defaults import patterns, include, url
 
 from django.contrib import admin
-from main.views import SiteListView, SiteDetailView
+from main.views import SiteListView, SiteDetailView, SiteVerifyView, SiteDeleteView
 
 admin.autodiscover()
 
@@ -24,6 +24,8 @@ urlpatterns = patterns('',
 
     url(r'^sites/$', SiteListView.as_view(), name="sites"),
     url(r'^sites/(?P<pk>[0-9]+)/$', SiteDetailView.as_view(), name="site_detail"),
+    url(r'^sites/(?P<pk>[0-9]+)/verify/$', SiteVerifyView.as_view(), name="site_verify"),
+    url(r'^sites/(?P<pk>[0-9]+)/delete/$', SiteDeleteView.as_view(), name="site_delete"),
 
     url(r'^content/', include("content.urls")),
 
