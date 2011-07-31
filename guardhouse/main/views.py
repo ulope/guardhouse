@@ -59,6 +59,10 @@ class SiteListView(LoginRequiredMixin, ListView):
     model = Site
     context_object_name="sites"
 
+    def get_queryset(self):
+        return Site.objects.filter(belongs_to=self.request.user.account)
+
+
 class SiteDetailView(LoginRequiredMixin, DetailView):
     model = Site
 
