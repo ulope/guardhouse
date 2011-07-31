@@ -1,5 +1,7 @@
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
+from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
 from django.contrib import messages
 from django.shortcuts import render, redirect
@@ -11,15 +13,18 @@ from .forms import AccountForm, SiteForm
 from .models import Account, Site
 
 
+@login_required
 def dashboard(request):
     return direct_to_template(request, 'main/dashboard.html')
 
 
+@login_required
 def settings(request):
     return direct_to_template(request, 'main/settings.html')
 
 
 @skip_has_account_middleware
+@login_required
 def account_setup(request, force=False):
     account = None
     try:
@@ -45,14 +50,19 @@ def account_setup(request, force=False):
     return render(request, 'main/account.html', {"form": form})
 
 
-class SiteListView(ListView):
+class LoginRequiredMixin(object):
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
+
+class SiteListView(LoginRequiredMixin, ListView):
     model = Site
     context_object_name="sites"
 
-class SiteDetailView(DetailView):
+class SiteDetailView(LoginRequiredMixin, DetailView):
     model = Site
 
-class SiteDeleteView(DeleteView):
+class SiteDeleteView(LoginRequiredMixin, DeleteView):
     model = Site
 
     def delete(self, request, *args, **kwargs):
@@ -63,7 +73,7 @@ class SiteDeleteView(DeleteView):
     def get_success_url(self):
         return reverse("sites")
 
-class SiteVerifyView(DeleteView):
+class SiteVerifyView(LoginRequiredMixin, DeleteView):
     """
     View to kick off site verification.
     (Hm a lot of code - not sure that CBV's are really an advantage)
@@ -88,7 +98,7 @@ class SiteVerifyView(DeleteView):
     def get_success_url(self):
         return reverse("sites")
 
-class SiteCreateView(CreateView):
+class SiteCreateView(LoginRequiredMixin, CreateView):
     model = Site
     form_class = SiteForm
 
