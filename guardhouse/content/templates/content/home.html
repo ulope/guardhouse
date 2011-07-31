@@ -1,12 +1,22 @@
 {% extends "content/base.html" %}
 
 {% block title %}
-    Welcome to guardhouse.
+    Welcome to guardhouse
 {% endblock %}
 
 {% block content %}
     <p>
         guardhouse is a service that helps you keep track of errors in your
-        django applications.
+        django applications. It utilizeses the awesome
+        <a href="https://github.com/dcramer/django-sentry">django-sentry</a>.
+    </p>
+    <p>
+        Log in, configure Sites and then point their sentry.client's to
+        http://{{ site.domain }}/sentry/store to have them send their logs
+        here. (The log accepting part: NOT WORKING YET)
+    </p>
+    <p>
+        You can share access to your account with other users so they can view
+        the logs as well. (NOT WORKING YET)
     </p>
 {% endblock %}
