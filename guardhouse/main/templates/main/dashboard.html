@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load url from future %}
 
 {% block nav_class_dashboard %}active{% endblock %}
 
 {% block body %}
     <h1>{% trans "Dashboard" %}</h1>
-    <p>{% trans "The following of your sites have unresolved messages:" %}</p>
+    <p>{% blocktrans %}
+        The following of your sites have unresolved messages. Click on the name
+        of a site to view it's messages.
+    {% endblocktrans %}</p>
     <table>
         <thead>
             <tr><td>{% trans "Site" %}</td><td>{% trans "Message count" %}</td></tr>
@@ -13,7 +17,7 @@
         <tbody>
             {% for site in sites %}
                 <tr>
-                    <td>{{ site.name }}</td>
+                    <td><a href="{% url "dashboard_messages" pk=site.pk %}">{{ site.name }}</a></td>
                     <td>{{ site.sentry_messages.count }}</td>
                 </tr>
             {% endfor %}

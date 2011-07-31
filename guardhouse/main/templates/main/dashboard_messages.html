@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+
+{% block nav_class_dashboard %}active{% endblock %}
+
+{% block body %}
+    <h1>{% trans "Dashboard" %}</h1>
+    <p>{% blocktrans with site.name as site_name %}
+        Messages for site '{{ site_name }}':
+    {% endblocktrans %}</p>
+    <ul>
+        {% for message in sentry_messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

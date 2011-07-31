@@ -1,10 +1,12 @@
+from itertools import groupby
+from operator import attrgetter
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, UpdateView
 from django.views.generic.edit import DeleteView, CreateView
 from django.views.generic.simple import direct_to_template
@@ -21,6 +23,18 @@ def dashboard(request):
     sites = request.user.account.sites.filter(sentry_messages__message__group__status=0)
     return render(request, 'main/dashboard.html', {"sites": sites})
 
+
+@login_required
+def dashboard_messages(request, pk):
+    """
+    Rudimentary message view
+    """
+    site = get_object_or_404(Site, pk=pk)
+    messages = groupby(site.sentry_messages.all(),
+                       attrgetter("message.group"))
+
+    return render(request, 'main/dashboard_messages.html',
+            {'site': site, 'sentry_messages': messages})
 
 @login_required
 def settings(request):

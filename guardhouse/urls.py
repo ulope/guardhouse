@@ -16,6 +16,7 @@ urlpatterns = patterns('',
 
     url(r'^$', 'content.views.home', name="home"),
     url(r'^dashboard/$', 'main.views.dashboard', name="dashboard"),
+    url(r'^dashboard/messages/(?P<pk>[0-9]+)/$', 'main.views.dashboard_messages', name="dashboard_messages"),
 
     url(r'^settings/$', 'main.views.settings', name="settings"),
 
