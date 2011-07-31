@@ -70,23 +70,24 @@ class SiteListView(LoginRequiredMixin, ListView):
 class SiteDetailView(LoginRequiredMixin, DetailView):
     model = Site
 
-class SiteDeleteView(LoginRequiredMixin, DeleteView):
+class SiteBaseModifyingMixin(object):
     model = Site
 
+    def get_success_url(self):
+        return reverse("sites")
+
+
+class SiteDeleteView(LoginRequiredMixin, SiteBaseModifyingMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.add_message(request, messages.INFO, _("Site has been deleted."))
         response = super(SiteDeleteView, self).delete(request, *args, **kwargs)
         return response
 
-    def get_success_url(self):
-        return reverse("sites")
-
-class SiteVerifyView(LoginRequiredMixin, DeleteView):
+class SiteVerifyView(LoginRequiredMixin, SiteBaseModifyingMixin, DeleteView):
     """
     View to kick off site verification.
     (Hm a lot of code - not sure that CBV's are really an advantage)
     """
-    model = Site
     template_name_suffix = '_confirm_verify'
 
     def post(self, *args, **kwargs):
@@ -103,8 +104,6 @@ class SiteVerifyView(LoginRequiredMixin, DeleteView):
 
         return HttpResponseRedirect(self.get_success_url())
 
-    def get_success_url(self):
-        return reverse("sites")
 
 class SiteCreateView(LoginRequiredMixin, CreateView):
     model = Site
