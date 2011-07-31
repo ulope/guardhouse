@@ -60,6 +60,10 @@ STATIC_URL = '/static/'
 
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
+LOGIN_URL          = '/auth/login/'
+LOGIN_REDIRECT_URL = '/dashboard/'
+LOGIN_ERROR_URL    = '/auth/loginerror/'
+
 STATICFILES_DIRS = (
     path.join(SITE_ROOT, "web"),
 )
@@ -80,6 +84,9 @@ except IOError:
         "You need to place a secret key in a file called '.secret' in the "
         "project root.\nFor example:\n\t$ ./manage.py generate_secret_key > .secret"
     )
+
+from django.template.defaultfilters import slugify
+SOCIAL_AUTH_USERNAME_FIXER = lambda u: slugify(u)
 
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
@@ -105,9 +112,10 @@ TEMPLATE_DIRS = (
 )
 
 AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.twitter.TwitterBackend',
+    'social_auth.backends.google.GoogleBackend',
+    'social_auth.backends.OpenIDBackend',
     'django.contrib.auth.backends.ModelBackend',
-    #'socialauth.auth_backends.OpenIdBackend',
-    #'socialauth.auth_backends.TwitterBackend',
 )
 
 INSTALLED_APPS = (
@@ -123,8 +131,7 @@ INSTALLED_APPS = (
     'south',
     'sentry',
     'sentry.client',
-    #'openid_consumer',
-    #'socialauth',
+    'social_auth',
     'djcelery',
 
     'content',
@@ -171,31 +178,6 @@ LOGGING = {
         },
     }
 }
-
-# socialauth stuff
-OPENID_REDIRECT_NEXT = '/accounts/openid/done/'
-
-OPENID_SREG = {"requred": "nickname, email, fullname",
-               "optional":"postcode, country",
-               "policy_url": ""}
-
-#example should be something more like the real thing, i think
-OPENID_AX = [{"type_uri": "http://axschema.org/contact/email",
-              "count": 1,
-              "required": True,
-              "alias": "email"},
-             {"type_uri": "http://axschema.org/schema/fullname",
-              "count":1 ,
-              "required": False,
-              "alias": "fname"}]
-
-OPENID_AX_PROVIDER_MAP = {'Google': {'email': 'http://axschema.org/contact/email',
-                                     'firstname': 'http://axschema.org/namePerson/first',
-                                     'lastname': 'http://axschema.org/namePerson/last'},
-                          'Default': {'email': 'http://axschema.org/contact/email',
-                                      'fullname': 'http://axschema.org/namePerson',
-                                      'nickname': 'http://axschema.org/namePerson/friendly'}
-                          }
 
 try:
     from local_settings import *
