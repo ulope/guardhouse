@@ -1,15 +1,15 @@
-from django.shortcuts import render_to_response
+from django.views.generic.simple import direct_to_template
 from .decorators import skip_has_account_middleware
 
 
 def dashboard(request):
-    return render_to_response('main/dashboard.html')
+    return direct_to_template(request, 'main/dashboard.html')
 
 
 def settings(request):
-    return render_to_response('main/settings.html')
+    return direct_to_template(request, 'main/settings.html')
 
 
 @skip_has_account_middleware
 def account_setup(request):
-    return render_to_response('main/dashboard.html')
+    return direct_to_template(request, 'main/dashboard.html')
