@@ -27,7 +27,7 @@ class HasAccountMiddleware(object):
                     return
             # User is neither authorized for other accounts nor has his own
             # account -> redirect to account setup
-            return redirect("account_setup")
+            return redirect("account_setup", force="new")
         except AttributeError:
             # No user on request 
             raise ImproperlyConfigured(
