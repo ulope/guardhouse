@@ -9,6 +9,7 @@
     <h1>Login</h1>
     <p>{% blocktrans %}You can either log in via username and password, or use one of the alternate login providers:{% endblocktrans %}</p>
     <section class="left">
+        <h2>Login with username and password:</h2>
         <form action="." method="post">
             {% csrf_token %}
             <ul>
@@ -16,16 +17,22 @@
                 <li><input type="submit" value="{% trans "Login" %}" /></li>
             </ul>
         </form>
+        <h2>No account?</h2>
+        {% url "register" as register_url %}
+        <p>{% blocktrans with register_url as register_url %}You can <a href="{{ register_url }}">create a new account</a> or use one of the other login providers on the right side.{% endblocktrans %}</p>
     </section>
     <section class="right">
         <h2>Login with:</h2>
-        <a href="{% url "socialauth_begin" backend="google" %}">Google</a>
-        <a href="{% url "socialauth_begin" "twitter" %}">Twitter</a>
+        <ul class="providers">
+            <li class="google"><a href="{% url "socialauth_begin" backend="google" %}">Google</a></li>
+            <li class="twitter"><a href="{% url "socialauth_begin" "twitter" %}">Twitter</a></li>
+        </ul>
+        <p>Or use another OpenID provider</p>
         <form action="{% url "socialauth_begin" "openid" %}" method="post">
             {% csrf_token %}
             <ul>
                 <li>
-                    <label for="openid_identifier">Other provider</label>
+                    <label for="openid_identifier">OpenID URL</label>
                     <input id="openid_identifier" type="text" value="" name="openid_identifier" />
                 </li>
                 <li><input type="submit" value="{% trans "Login" %}" /></li>
