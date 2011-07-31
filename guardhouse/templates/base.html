@@ -66,9 +66,8 @@
         {% endif %}
         <nav>
             <ul>
-                {% if user.is_anonymous %}
-                    <li class="{% block nav_class_about %}{% endblock %}"><a href="{% url "home" %}">About</a></li>
-                {% else %}
+                <li class="{% block nav_class_about %}{% endblock %}"><a href="{% url "home" %}">About</a></li>
+                {% if user.is_authenticated %}
                     <li class="{% block nav_class_dashboard %}{% endblock %}"><a href="{% url "dashboard" %}">{% trans "Dashboard" %}</a></li>
                     <li class="{% block nav_class_account_setup %}{% endblock %}"><a href="{% url "account_setup" %}">{% trans "My Account" %}</a></li>
                     <li class="{% block nav_class_sites %}{% endblock %}"><a href="{% url "sites" %}">{% trans "My Sites" %}</a></li>
