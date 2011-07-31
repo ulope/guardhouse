@@ -37,11 +37,13 @@ class Account(BaseModel):
 
 class VERIFY_STATE(object):
     NEW = "new"
+    VERIFYING = "verifying"
     FAILED = "failed"
     VERIFIED = "verified"
 
 VERIFICATION_STATE_CHOICES = (
     (VERIFY_STATE.NEW, _("New")),
+    (VERIFY_STATE.VERIFYING, _("Verifying...")),
     (VERIFY_STATE.FAILED, _("Failed")),
     (VERIFY_STATE.VERIFIED, _("Verified")),
 )
