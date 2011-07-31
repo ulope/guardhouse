@@ -5,7 +5,7 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, UpdateView
 from django.views.generic.edit import DeleteView, CreateView
 from django.views.generic.simple import direct_to_template
 from .decorators import skip_has_account_middleware
@@ -105,7 +105,7 @@ class SiteVerifyView(LoginRequiredMixin, SiteBaseModifyingMixin, DeleteView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class SiteCreateView(LoginRequiredMixin, CreateView):
+class SiteCreateUpdateMixin(object):
     model = Site
     form_class = SiteForm
 
@@ -115,11 +115,13 @@ class SiteCreateView(LoginRequiredMixin, CreateView):
         self.object.save()
         messages.add_message(
             self.request, messages.INFO,
-            _("Site '%s' has been created") % self.object.name
+            self.success_message % self.object.name
         )
-        return super(SiteCreateView, self).form_valid(form)
+        return super(SiteCreateUpdateMixin, self).form_valid(form)
 
-    def get_success_url(self):
-        return reverse("sites")
+class SiteCreateView(LoginRequiredMixin, SiteCreateUpdateMixin, SiteBaseModifyingMixin, CreateView):
+    success_message = _("Site '%s' has been created.")
 
+class SiteUpdateView(LoginRequiredMixin, SiteCreateUpdateMixin, SiteBaseModifyingMixin, UpdateView):
+    success_message = _("Site '%s' has been updated,")
 
