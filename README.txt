@@ -11,8 +11,8 @@ Currently working functionality:
   verification of domain ownership
 * Reception of sentry exception logs
 
-Missing functionality:
-* Displaying of exception logs
+Baerly working functionality:
+* Displaying of exception logs - The plan is to integrate sentry's views
 
 
 The requirements are listed in pip freeze format in req.txt
@@ -20,6 +20,8 @@ The requirements are listed in pip freeze format in req.txt
 Configuration requirement:
 A django "secret key" must be placed in a file called ".secret" in the django
 project root.
+For Twitter OAuth to be working TWITTER_CONSUMER_KEY and TWITTER_CONSUMER_SECRET
+need to be defined (e.g. in local_settings.py).
 
 A working instance can be found at http://guardhous.es/
 
