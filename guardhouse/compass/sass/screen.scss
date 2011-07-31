@@ -1,6 +1,8 @@
 @import "compass";
 @import "compass/reset";
 
+@import "compass/utilities/general/clearfix";
+
 @import "compass/layout";
 @import "compass/layout/grid-background";
 @import "compass/layout/stretching";
@@ -23,6 +25,8 @@ body {
 }
 
 #page {
+    @include clearfix;
+
     width: 930px;
     margin: 15px auto;
     background: white;
@@ -32,6 +36,7 @@ body {
     
     // @include grid-background();
     padding: 0 15px;
+    padding-bottom: 50px;
     position: relative;
     min-height: 550px;
 }
@@ -129,6 +134,13 @@ section#body {
         margin-bottom: 10px;
     }
 
+    table {
+        width: 100%;
+        td {
+            padding: 3px 0;
+        }
+    }
+
     .left, .right {
         width: 345px;
     }
@@ -140,10 +152,38 @@ section#body {
     }
 }
 
+ul.list {
+    list-style: disc;
+    li {
+        margin-left: 25px;
+        margin-bottom: 20px;
+        padding-left: 5px;
+    }
+}
+
 ul.providers {
     .google {
             
     }
+}
+
+a.showlink {
+    font-size: 10pt;
+}
+
+span.source {
+    font-family: Courier, fixed-with;
+    font-size: 10pt;
+    display: block;
+    border: 1px dashed #aaa;
+    border-left: none;
+    border-right: none;
+    overflow: auto;
+    padding: 15px;
+}
+
+p.important {
+    font-weight: bold;
 }
 
 footer {
