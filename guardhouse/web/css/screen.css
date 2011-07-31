@@ -328,8 +328,13 @@ form span.helptext {
   margin-left: 250px;
   margin-bottom: 5px;
 }
+/* line 210, ../../compass/sass/screen.scss */
+form ul.errorlist {
+  color: #e42d2d;
+  margin-bottom: 5px !important;
+}
 
-/* line 212, ../../compass/sass/screen.scss */
+/* line 216, ../../compass/sass/screen.scss */
 footer {
   position: absolute;
   bottom: 15px;
@@ -337,7 +342,7 @@ footer {
   left: 0;
   right: 0;
 }
-/* line 217, ../../compass/sass/screen.scss */
+/* line 221, ../../compass/sass/screen.scss */
 footer ul {
   margin: 0;
   padding: 0;
@@ -368,12 +373,12 @@ footer ul li:last-child {
 footer ul li.last {
   padding-right: 0;
 }
-/* line 219, ../../compass/sass/screen.scss */
+/* line 223, ../../compass/sass/screen.scss */
 footer ul:first-child {
   margin-left: 15px;
   float: left;
 }
-/* line 223, ../../compass/sass/screen.scss */
+/* line 227, ../../compass/sass/screen.scss */
 footer ul:last-child {
   float: right;
   margin-right: 15px;
