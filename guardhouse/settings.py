@@ -160,10 +160,14 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
+        'south': {
+            'level': 'INFO',
+            'propagate': False,
+        },
         '': {
             'handlers': ['console'],
             'level': 'DEBUG',
-        }
+        },
     }
 }
 
