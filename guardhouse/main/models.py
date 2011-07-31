@@ -55,7 +55,7 @@ class Site(BaseModel):
     used.
     """
     name = models.CharField(_("Name"), max_length=300)
-    domain = models.CharField(_("Domain name"), max_length=300)
+    domain = models.CharField(_("Domain name"), max_length=300, unique=True)
     allow_wild_subdomain = models.BooleanField(
         _("Allow wildcard subdomains"), default=False,
         help_text=_("Check this to also accept messages for all subdomains.")
