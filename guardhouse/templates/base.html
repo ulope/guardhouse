@@ -13,6 +13,8 @@
     <![endif]-->
 
     {% compress js %}
+        <script type="text/javascript" src="{{ STATIC_URL }}js/mootools-core-1.3.2-full.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/mootools-more-1.3.2.1.js"></script>
     {% endcompress %}
     {% block extra_head %}
         
