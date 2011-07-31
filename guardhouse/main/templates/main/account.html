@@ -4,8 +4,10 @@
 {% block nav_class_account_setup %}active{% endblock %}
 
 {% block body %}
-    <h1>Account setup</h1>
-    <p>Please give your account a name. This can be anything you feel comfortable with. Keep in mind that this name will also be used to refer to this account if you decide to giver others access to it.</p>
+    <h1>{% trans "Account setup" %}</h1>
+    <p>{% blocktrans %}
+        Please give your account a name. This can be anything you feel comfortable with. Keep in mind that this name will also be used to refer to this account if you decide to giver others access to it. 
+    {% endblocktrans %}</p>
     <form action="." method="POST">
         {% csrf_token %}
         <ul>
